@@ -48,9 +48,13 @@ app.post("/createMentor",async function(req,res){                          //Cre
 });
 
 
-app.put("/assignStudent/:id",async function(req,res){                      //Assigning student with specific object ID to mentor
-   let objId=(mongodb.ObjectId(`${req.params.id}`));
-   console.log(objId);
+app.put("/assignStudent/:name",async function(req,res){                      //Assigning student with specific object ID to mentor
+   let client=await mongoClient.connect(url);
+   let db=client.db("studentmentor");
+   let studentName=req.params.name;
+   let studentDetails=await db.collection('student').find({name:studentName});   //How to find using object ID? mongodb.ObjectId() not working properly.
+   client.close();
+   console.log(studentDetails.name);                          //how to pick specific keys from the returned object from find? How to assign stiudent to mentor?
 });
 
 
