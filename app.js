@@ -2,8 +2,14 @@ var express=require('express');
 var app=express();
 var bodyParser=require('body-parser');
 var mongodb=require('mongodb');
+var cors=require('cors');
 const mongoClient = mongodb.MongoClient;
 var url="mongodb://localhost:27017"
+
+app.use(cors({
+    origin: "http://127.0.0.1:5500/index.html"
+}))
+
 
 app.use(bodyParser.json());
 
