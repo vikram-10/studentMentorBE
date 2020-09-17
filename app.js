@@ -7,7 +7,7 @@ const mongoClient = mongodb.MongoClient;
 var url="mongodb+srv://vikram:viki2000@cluster0.6e3ep.mongodb.net/studentmentor?retryWrites=true&w=majority"
 
 app.use(cors({
-    origin: "https://hardcore-sinoussi-c33a95.netlify.app/"
+    origin: "*"
 }))
 
 
