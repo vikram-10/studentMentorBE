@@ -54,9 +54,8 @@ app.put("/assignStudent/:id/:studentName",async function(req,res){              
    let mentorId=req.params.id;
    let mentorDetails=await db.collection('mentor').findOneAndUpdate({_id:mongodb.ObjectID(mentorId)},{$addToSet: {studentName: req.params.studentName}});
    let studentDetails=await db.collection('student').findOneAndUpdate({name:req.params.studentName},{$set:{status:"assigned"}});
-   client.close();
-   console.log(mentorDetails);     
-   console.log(studentDetails);                   
+   client.close();    
+   res.json(studentDetails);                   
 });
 
 
