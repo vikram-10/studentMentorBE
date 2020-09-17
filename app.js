@@ -22,7 +22,7 @@ app.get("/showStudents",async function(req,res){                              //
 app.post("/createStudent",async function(req,res){                           //Creates Student API
   let client=await mongoClient.connect(url);
   let db=client.db("studentmentor");
-  await db.collection("student").insertOne({name : req.body.name});
+  await db.collection("student").insertOne({name : req.body.name,status:req.body.status});
   client.close();
   res.json({
       message: "Student Created!"
@@ -48,13 +48,15 @@ app.post("/createMentor",async function(req,res){                          //Cre
 });
 
 
-app.put("/assignStudent/:name",async function(req,res){                      //Assigning student with specific object ID to mentor
+app.put("/assignStudent/:id/:studentName",async function(req,res){                      //Assigning student with specific object ID to mentor
    let client=await mongoClient.connect(url);
    let db=client.db("studentmentor");
-   let studentName=req.params.name;
-   let studentDetails=await db.collection('student').find({name:studentName});   //How to find using object ID? mongodb.ObjectId() not working properly.
+   let mentorId=req.params.id;
+   let mentorDetails=await db.collection('mentor').findOneAndUpdate({_id:mongodb.ObjectID(mentorId)},{$addToSet: {studentName: req.params.studentName}});
+   let studentDetails=await db.collection('student').findOneAndUpdate({name:req.params.studentName},{$set:{status:"assigned"}});
    client.close();
-   console.log(studentDetails.name);                          //how to pick specific keys from the returned object from find? How to assign stiudent to mentor?
+   console.log(mentorDetails);     
+   console.log(studentDetails);                   
 });
 
 
