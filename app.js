@@ -4,10 +4,10 @@ var bodyParser=require('body-parser');
 var mongodb=require('mongodb');
 var cors=require('cors');
 const mongoClient = mongodb.MongoClient;
-var url="mongodb://localhost:27017"
+var url="mongodb+srv://vikram:viki2000@cluster0.6e3ep.mongodb.net/studentmentor?retryWrites=true&w=majority"
 
 app.use(cors({
-    origin: "http://127.0.0.1:5500/index.html"
+    origin: "https://hardcore-sinoussi-c33a95.netlify.app/"
 }))
 
 
@@ -16,6 +16,10 @@ app.use(bodyParser.json());
 app.get("/",function(req,res){
     res.send("Hello World!");
 });
+
+app.get("/assign/:studentName",function(req,res){
+    res.send("HELLO WORLD");
+ });
 
 app.get("/showStudents",async function(req,res){                              //Shows all Student API
    let client=await mongoClient.connect(url);
@@ -34,6 +38,8 @@ app.post("/createStudent",async function(req,res){                           //C
       message: "Student Created!"
   })
 });
+
+
 
 app.get("/showMentors",async function(req,res){                            //Sends all mentors API
     let client=await mongoClient.connect(url);
