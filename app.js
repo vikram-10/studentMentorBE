@@ -8,7 +8,7 @@ var url="mongodb+srv://vikram:viki2000@cluster0.6e3ep.mongodb.net/studentmentor?
 
 app.use(cors({
     origin: "*"
-}))
+}));
 
 
 app.use(bodyParser.json());
@@ -21,7 +21,7 @@ app.get("/assign/:studentName",function(req,res){
     res.send("HELLO WORLD");
  });
 
-app.get("/showStudents",async function(req,res){                              //Shows all Student API
+app.get("/showStudents",async(req,res)=>{                              //Shows all Student API
    let client=await mongoClient.connect(url);
    let db=client.db("studentmentor");
    let allStudents=await db.collection('student').find().toArray();
@@ -29,7 +29,7 @@ app.get("/showStudents",async function(req,res){                              //
    res.json(allStudents);
 });
 
-app.post("/createStudent",async function(req,res){                           //Creates Student API
+app.post("/createStudent",async(req,res)=>{                           //Creates Student API
   let client=await mongoClient.connect(url);
   let db=client.db("studentmentor");
   await db.collection("student").insertOne({name : req.body.name,status:req.body.status});
@@ -41,7 +41,7 @@ app.post("/createStudent",async function(req,res){                           //C
 
 
 
-app.get("/showMentors",async function(req,res){                            //Sends all mentors API
+app.get("/showMentors",async(req,res)=>{                            //Sends all mentors API
     let client=await mongoClient.connect(url);
     let db=client.db("studentmentor");
     let allMentors=await db.collection('mentor').find().toArray();
@@ -60,7 +60,7 @@ app.post("/createMentor",async function(req,res){                          //Cre
 });
 
 
-app.put("/assignStudent/:id/:studentName",async function(req,res){                      //Assigning student with specific object ID to mentor
+app.put("/assignStudent/:id/:studentName",async(req,res)=>{                      //Assigning student with specific object ID to mentor
    let client=await mongoClient.connect(url);
    let db=client.db("studentmentor");
    let mentorId=req.params.id;
@@ -71,6 +71,6 @@ app.put("/assignStudent/:id/:studentName",async function(req,res){              
 });
 
 
-app.listen(3000,function(req,res){
+app.listen(3000,(req,res)=>{
    console.log("Server Has started");
 });
